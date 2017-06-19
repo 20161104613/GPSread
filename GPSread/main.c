@@ -8,8 +8,19 @@
 
 #include <stdio.h>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
-    return 0;
+int main()
+{
+    char a[65];
+    int j,i,t;;
+    FILE *fp1,*fp2;
+    fp1=fopen("//Users//a20161104613//Downloads//TRAC-master//GPS170510.log ","r");
+    fp2=fopen("//Users//a20161104613//Desktop//GPSread//read.txt","w");
+    if(fp1==NULL)
+    {
+        printf("打开文件错误！\n");
+    }
+    else
+    {
+        
+    }
 }
