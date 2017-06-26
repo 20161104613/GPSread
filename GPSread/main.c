@@ -10,13 +10,9 @@
 
 int main()
 {
-    char str1[70];
-    char str2[70];
-    char lat[8];
-    //char lon[8];
-    int i;
+    char time[10],gps,lat1,lon1,year[10],s[5];
+    double lat,lon,v,course;
     FILE *fp1;
-    //Users/a20161104613/Downloads/TRAC-master/GPS170510.log
     fp1=fopen("//Users//a20161104613//Downloads//TRAC-master//GPS170510.log","r");
     //fp2=fopen("//Users//a20161104613//Desktop//GPSread//read.txt","w");
     if(fp1==NULL)
@@ -25,21 +21,33 @@ int main()
     }
     else
     {
-        fscanf(fp1,"%s%s",str1,str2);
-        printf("结果是：\n%s\n%s\n",str1,str2);
-        for(i=0;i<8;i++)
-            lat[i]=str1[i+16];
-        lat[8]='\0';
-        if(str1[18]='N')
+        fscanf(fp1,"$GPRMC,%6s,%c,%8s,%c,%9s,%c,%lf,%lf,%6s,,%3s\n$GPGGA,%6s,%lf,%8c,%lf,%c,%lf,%c,%d,%2s,,%4s,M,,M,,%3s\n",time,&gps,lat,&lat1,lon,&lon1,&v,&course,year,s,Time,&Lat,&Lat1,&Lon,&Lon1,&gps);
+        //printf("$GPRMC,%6s,%c,%lf,%c,%lf,%c,%lf,%lf,%6s,,%s",time,&gps,&lat,&lat1,&lon,&lon1,&v,&course,year,s);
+        if(gps=='A')
         {
-        printf("纬度：北纬%s\n",lat);
+            printf("当前为%c%c年%c%c月%c%c日%c%c时%c%c分%c%c秒\n",year[0],year[1],year[2],year[3],year[4],year[5],time[0],time[1],time[2],time[3],time[4],time[5]);
+            if(lat1=='N')
+            {
+                printf("纬度：北纬%lf\n",lat);
+            }
+            else
+            {
+                printf("纬度：南纬%lf\n",lat);
+            }
+            if(lon1=='E')
+            {
+                printf("经度：东经%lf\n",lon);
+            }
+            else
+            {
+                printf("经度：西经%lf\n",lon);
+            }
+            printf("地面速率是%lf节，地面航向是%lf度\n",v,course);
         }
-    else
-    {
-        printf("纬度：南纬%s\n",lat);
-    }
-        fclose(fp1);
+        else
+        {
+            printf("无效定位\n");
+        }
         return 0;
     }
-    
 }
